@@ -91,6 +91,17 @@ EXPOSE 8080
 WORKDIR /usr/local/opt/apps/connection/
 
 CMD ["java", "-jar", "app.jar"]
+
+
+//========================================================================
+
+FROM openjdk:8-alpine
+VOLUME /tmp
+ADD ./target/connectiontest.jar app.jar
+RUN sh -c ‘touch /app.jar’
+ENV JAVA_OPTS=””
+ENTRYPOINT [ “sh”, “-c”, “java $JAVA_OPTS -Djava.security .egd=file:/dev/./urandom -jar /app.jar” ]
+
 ```
 - 这边docker打包有两种方式，一种是原生docker命令实现，一种是依赖docker-maven-plugin的插件来完成，日后在做总结，本次使用方法一
 - maven 将项目打包
@@ -143,3 +154,10 @@ redis 也使用name :redis-server
 - 内部配置使用127.0.0.1，像本地测试一样进行就可以了
 - docker run --rm -d -p 8080:8080 --name test3  connectiontest:1.0
 - 同样查看日志，确实访问数据库是没有问题，可是似乎就没有办法通过127.0.0.1:8080/swagger-ui.html 进行访问，出现访问不了的情况，暂时没有研究为什么，日后补充
+
+
+#### 附录
+- [参考1](https://segmentfault.com/a/1190000016557755)
+- [参考2](https://blog.csdn.net/begin1013/article/details/80860224)
+- [参考3](https://blog.csdn.net/xiaoxiangzi520/article/details/78775503)
+- [参考4](https://www.cnblogs.com/ityouknow/p/8661644.html)
