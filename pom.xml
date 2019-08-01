@@ -6,8 +6,13 @@
 
     <groupId>com.github</groupId>
     <artifactId>clairechen</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
+    <modules>
+        <module>docker-learning</module>
+        <module>k8s-learning</module>
+        <module>sh-test</module>
+    </modules>
 
 
     <dependencies>
