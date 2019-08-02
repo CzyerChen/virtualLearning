@@ -61,9 +61,11 @@ docker exec -it 容器id  /bin/bash
 
 
 ### 辅助命令
-- 插卡镜像ip
+- 查看镜像ip
 ```text
 docker inspect 容器ID | grep IPAddress
+或者进入容器
+cat /etc/hosts
 ```
 - 查看镜像名称
 ```text
@@ -76,6 +78,44 @@ sudo docker inspect -f='{{.NetworkSettings.IPAddress}}' $(sudo docker ps -a -q)
 - 列出镜像以及相关的端口
 ```text
  docker inspect -f='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
+```
+- 查看容器日志
+```text
+docker logs containerId
+```
+- docker的内部容器默认使用ubuntu的系统，因而容器内重置系统时区，可以采用以下命令
+```text
+Ubuntu和Debian使用dpkg 来执行Debain套件(.deb)的安装与删除等功能，等同于Rhel和Fedora的rpm指令。 
+dpkg也被作为高级安装指令如apt(advance package tool)等程序的地层调用
+
+dpkg-reconfigure dash 
+设置默认的shell为bash
+
+dpkg-reconfigure locales 
+本地化语言设置
+
+dpkg-reconfigure tzdata  -----> Asia/Shanghai
+设置时区
+
+dpkg-reconfigure console-setup 
+设置控制台选项
+
+dpkg-reconfigure openssh-server 
+生新生成ssh服务的RSA的DSA key
+
+```
+
+- 宿主机+子容器的文件拷贝
+```text
+命令均在宿主机上使用:
+
+容器中文件拷贝到宿主机：
+   docker cp 容器名：要拷贝的文件在容器里面的路径       要拷贝到宿主机的相应路径
+   
+宿主机文件拷贝到容器：
+   docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的路径
+   
+docker ps -a 能够查看容器的名称，请注意是容器的名称，而不是ID
 ```
 
 
